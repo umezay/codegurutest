@@ -16,6 +16,12 @@ def main():
     c2 = input()
     eval(c2)
 
+    c3 = input()
+    eval(c3)
+
+    c4 = input()
+    eval(c4)
+
     if 1 == 1:
         print('foo')
     else:
