@@ -1,0 +1,35 @@
+# Sample workflow to access AWS resources when workflow is tied to branch
+# The workflow Creates static website using aws s3
+name: AWS example workflow
+on:
+  pull_request:
+    branchs:
+      - main
+    paths-ignore:
+      - README.md
+env:
+  AWS_REGION: ap-northeast-1
+# permission can be added at job level or workflow level
+permissions:
+  id-token: write
+  contents: read # This is required for actions/checkout@v2
+  security-events: write # To upload sarif files
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # This is required field for CodeGuru
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      if: ${{ always() }} # This ensures that your workflow runs successfully
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-1
+      - name: CodeGuru Reviewer
+        uses: ./.github/actions/code_guru_reviewer
+        with:
+          s3_bucket: codeguru-reviewer-aaaaaaaaaa

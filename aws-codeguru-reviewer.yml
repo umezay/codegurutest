@@ -1,0 +1,13 @@
+version: 1.0
+excludeFiles:
+  # - '**/*.py'
+  - '*.py'
+  - '**node_modules/**'
+  - '**__pycache__/**'
+  - '**cdk.out/**'
+# - '**/*.json'
+# - '**/*.js'
+# - '**/*.md'
+# - '.github/**'
+# - 'infra/**'
+# - '.gitignore'
